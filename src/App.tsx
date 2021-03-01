@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import List from './components/List.tsx';
+import Add from './components/Add.tsx';
+import {ToDo} from './todo.model.ts';
+import {v4 as uuidv4} from 'uuid';
 
-function App() {
+const App: React.FC = () => {
+  const [todos, setTodos] = useState<ToDo[]>([])
+
+  const newToDo = (text: string) => {
+    setTodos(prevTodos => [
+      ...prevTodos,
+      {id: uuidv4(), text:text}
+    ])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>TO DO LIST</h1>
+      <Add newToDo={newToDo}/>
+      <List items={todos}/>
     </div>
-  );
+  )
 }
 
 export default App;
