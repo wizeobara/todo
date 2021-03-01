@@ -11,7 +11,7 @@ const Add: React.FC<newToDo> = props => {
 
     const submitHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        const newText = todoInput.current!.value;
+        const newText = todoInput.current?.value ?? ''
         console.log(newText)
         props.newToDo(newText)
     }

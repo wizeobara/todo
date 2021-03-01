@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import List from './components/List.tsx';
-import Add from './components/Add.tsx';
-import {ToDo} from './todo.model.ts';
+import List from './components/List';
+import Add from './components/Add';
+import {ToDo} from './todo.model';
 import {v4 as uuidv4} from 'uuid';
 
 const App: React.FC = () => {
@@ -14,12 +14,15 @@ const App: React.FC = () => {
       {id: uuidv4(), text:text}
     ])
   }
+  const deleteToDo = (id: string) => {
+    setTodos(todos.filter(v => v.id !== id))
+  }
 
   return (
     <div>
       <h1>TO DO LIST</h1>
       <Add newToDo={newToDo}/>
-      <List items={todos}/>
+      <List items={todos} deleteToDo={deleteToDo}/>
     </div>
   )
 }
