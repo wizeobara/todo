@@ -4,9 +4,10 @@ import React from 'react';
 interface ListProps {
   items: { id: string; text: string }[];
   deleteToDo: (id: string) => void;
+  doneToDo: (id: string) => void;
 }
 
-const List: React.FC<ListProps> = ({items, deleteToDo}) => {
+const List: React.FC<ListProps> = ({items, deleteToDo, doneToDo}) => {
   return (
     <ul>
       {items.map((list) => (
@@ -14,6 +15,9 @@ const List: React.FC<ListProps> = ({items, deleteToDo}) => {
           <li >{list.text}</li>
           <button onClick={() => deleteToDo(list.id)}>
             DELETE
+          </button>
+          <button onClick={() => doneToDo(list.id)}>
+              DONE
           </button>
         </div>
       ))}

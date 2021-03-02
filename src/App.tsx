@@ -1,30 +1,17 @@
-import React, {useState} from 'react';
-import './App.css';
-import List from './components/List';
-import Add from './components/Add';
-import {ToDo} from './todo.model';
-import {v4 as uuidv4} from 'uuid';
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+import Main from './pages/Main'
+import Sub from './pages/Sub'
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<ToDo[]>([])
-
-  const newToDo = (text: string) => {
-    setTodos(prevTodos => [
-      ...prevTodos,
-      {id: uuidv4(), text:text}
-    ])
-  }
-  const deleteToDo = (id: string) => {
-    setTodos(todos.filter(v => v.id !== id))
-  }
-
   return (
-    <div>
-      <h1>TO DO LIST</h1>
-      <Add newToDo={newToDo}/>
-      <List items={todos} deleteToDo={deleteToDo}/>
-    </div>
+    <BrowserRouter>
+    <h1>TO DO LIST</h1>
+    
+      <Route exact path='/' component={Main}/>
+    </BrowserRouter>
   )
 }
 
-export default App;
+export default App
