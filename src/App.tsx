@@ -8,8 +8,10 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
     <h1>TO DO LIST</h1>
-    
+      <Switch>
       <Route exact path='/' component={Main}/>
+      <Route exact path='/sub' component={Sub}/>
+      </Switch>
     </BrowserRouter>
   )
 }

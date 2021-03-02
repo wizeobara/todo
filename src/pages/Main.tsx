@@ -3,6 +3,7 @@ import List from '../components/List';
 import Add from '../components/Add';
 import { ToDo } from '../todo.model';
 import { v4 as uuidv4 } from 'uuid';
+import {Link} from 'react-router-dom';
 // import Done from './components/Done'
 
 const Main: React.FC = () => {
@@ -23,6 +24,7 @@ const Main: React.FC = () => {
       <Add newToDo={newToDo} />
       <List items={todos} deleteToDo={deleteToDo} doneToDo={doneToDo} />
       {/* <Done /> */}
+      <Link to='/sub'>Sub Page...</Link>
     </div>
   );
 };
