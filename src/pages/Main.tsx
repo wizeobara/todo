@@ -1,30 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import List from '../components/List';
 import Add from '../components/Add';
 import { ToDo } from '../todo.model';
-import { v4 as uuidv4 } from 'uuid';
-import {Link} from 'react-router-dom';
-// import Done from './components/Done'
+import { Link } from 'react-router-dom';
+import Done from '../components/Done';
 
 const Main: React.FC = () => {
   const [todos, setTodos] = useState<ToDo[]>([]);
+  const [done, setDone] = useState<ToDo[]>([]);
 
-  const newToDo = (text: string) => {
-    setTodos((prevTodos) => [...prevTodos, { id: uuidv4(), text: text }]);
+  useEffect(() => {
+    axios.get('http://localhost:5000/progress').then((res) => {
+      setTodos(res.data);
+      console.log(todos);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/done').then((res) => {
+      setDone(res.data);
+      console.log(done);
+    });
+  }, []);
+
+  const deleteToDo = (_id: string) => {
+    axios.delete('http://localhost:5000/progress/' + _id).then((res) => {
+      console.log(res.data);
+      location.reload();
+    });
   };
-  const deleteToDo = (id: string) => {
-    setTodos(todos.filter((v) => v.id !== id));
-  };
-  const doneToDo = (id: string) => {
-    setTodos(todos.filter((v) => v.id !== id));
+
+  const doneToDo = (_id: string) => {
+    axios.get('http://localhost:5000/progress/' + _id).then((res) => {
+        axios.post('http://localhost:5000/done', res.data);
+        
+    }).then(() => {
+        axios.delete('http://localhost:5000/progress/' + _id).then((res) => {
+            console.log(res.data);
+            location.reload();
+        })
+    })
   };
 
   return (
     <div>
-      <Add newToDo={newToDo} />
+      <Add />
       <List items={todos} deleteToDo={deleteToDo} doneToDo={doneToDo} />
-      {/* <Done /> */}
-      <Link to='/sub'>Sub Page...</Link>
+      <Done items={done} />
+      <Link to="/sub">Sub Page...</Link>
     </div>
   );
 };
