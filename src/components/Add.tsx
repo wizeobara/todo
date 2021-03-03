@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useRef} from 'react';
 
 //type - props interface
@@ -5,15 +6,18 @@ type newToDo = {
     newToDo: (text: string) => void
 }
 
-const Add: React.FC<newToDo> = props => {
+const Add: React.FC<newToDo> = () => {
     //Initial value of null
     const todoInput = useRef<HTMLInputElement>(null)
 
     const submitHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        const newText = todoInput.current?.value ?? ''
-        console.log(newText)
-        props.newToDo(newText)
+        const newText = {
+            description: todoInput.current?.value ?? ''
+        }
+        axios.post("http://localhost:5000/progress", newText)
+            .then(res => console.log(res.data))
+            location.reload();
     }
 
     return (
