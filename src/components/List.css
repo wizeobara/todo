@@ -1,0 +1,32 @@
+.modal__overlay{
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 初期状態は非表示 */
+    opacity: 0;
+    visibility: hidden;
+    /* ゆっくり表示させる */
+    transition: opacity .3s, visibility .3s;
+  }
+  /* モーダル表示(modalがtrueになったら付与される) */
+  .is-opened{
+    visibility: visible;
+    opacity: 1;
+  }
+  .modal__box{
+    background-color: #fff;
+    padding: 30px 20px;
+    position: relative;
+  }
+  .modal__closeBtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }

@@ -9,6 +9,7 @@ import Done from '../components/Done';
 const Main: React.FC = () => {
   const [todos, setTodos] = useState<ToDo[]>([]);
   const [done, setDone] = useState<ToDo[]>([]);
+  const [query, setQuery] =useState("react")
 
   useEffect(() => {
     axios.get('http://localhost:5000/progress').then((res) => {
@@ -42,11 +43,21 @@ const Main: React.FC = () => {
         })
     })
   };
+  
+  const editToDo = (_id: string) => {
+    const newInput = {
+      description: query,
+    };
+    axios
+      .post('http://localhost:5000/progress/update/' + _id, newInput)
+      .then((res) => console.log(res.data));
+  };
 
   return (
     <div>
       <Add />
-      <List items={todos} deleteToDo={deleteToDo} doneToDo={doneToDo} />
+      <List items={todos} deleteToDo={deleteToDo} doneToDo={doneToDo} 
+      editToDo={editToDo} setQuery={setQuery}/>
       <Done items={done} />
       <Link to="/sub">Sub Page...</Link>
     </div>
